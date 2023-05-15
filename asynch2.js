@@ -1,12 +1,13 @@
 
 let postElement = document.getElementById('posts')
 let addElement = document.getElementById('submit')
+let updateElement = document.getElementById('update')
 let postForm =document.getElementById('postForm')
 
 let postTitle = document.getElementById('titlePost')
 let postAuthor = document.getElementById('authorPost')
-let dataPost;
-
+let dataPost = null;
+let editId = null;
 
 
 // console.log(postTitle.value, "andkkb");
@@ -20,6 +21,18 @@ addElement.onclick = (e) => {
         author : postAuthor.value
     }
     addPosts(addPostValue)
+}
+
+updateElement.onclick = (e) => {
+    e.preventDefault()
+    
+    const updatePostsValue = {
+        title : postTitle.value,
+        author : postAuthor.value
+    }
+
+    UpdatePosts(updatePostsValue)
+    
 }
 
 
@@ -40,7 +53,7 @@ async function renderPost(){
             <td>Title : ${x.title}</td>
             <td>Author : ${x.author}</td>
             <td> <button class = "delete" data-index="${x.id}"> Hapus</button>
-            <button class = "update" data-index="${index}" onclick="editPosts(${index})"> Edit </button> </td>
+            <button class="update" data-index="${index}" onclick="editPosts(${index})"> Edit </button> </td>
             </tr>`
             list += sum  
     })
@@ -87,27 +100,33 @@ async function addPosts(addPostValue){
         }
     })
 
-    // const postAdd =await getAdd.json()
-    // console.log(postAdd,
-    //     'postAdd')
+    const postAdd =await getAdd.json()
+    console.log(postAdd,'postAdd')
     // renderPost()
 }
 
-async function editPosts(index){
-
+function editPosts(index){
     // console.log('post ke index:', index, dataPost[index])
-
     postTitle.value = dataPost[index].title
     postAuthor.value = dataPost[index].author
+    editIndex = index
+    console.log(postTitle.value, "edit index")
+}
 
-    // console.log("coba dulu");
-    const getEdit = await fetch('http://localhost:3000/posts/', {
-        method: 'PATCH', 
+async function UpdatePosts(params){
+    const item = dataPost[editIndex]
+    console.log(item,'no tem');
+    const getUpdate = await fetch(`http://localhost:3000/posts/${item.id}`, {
+        method: 'PUT', 
+        body: JSON.stringify(params),
         headers: {
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify()
+            'Content-type': 'application/json; charset=UTF-8',
+        }
     })
+    const postUpdate = await getUpdate.json()
+
+    console.log(postUpdate, "post update")
+    renderPost()
 
 }
 
