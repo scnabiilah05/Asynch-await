@@ -1,0 +1,33 @@
+{
+  "posts": [
+    {
+      "title": "babay",
+      "author": "everyone",
+      "id": 2
+    },
+    {
+      "title": "hello",
+      "author": "it's me again",
+      "id": 3
+    },
+    {
+      "title": "sd",
+      "author": "dfdf",
+      "id": 4
+    },
+    {
+      "title": "sd",
+      "author": "hahahah",
+      "id": 5
+    },
+    {
+      "title": "babay",
+      "author": "everybody",
+      "id": 6
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
